@@ -1,10 +1,11 @@
 
-
+// create variable to hold connection
 let db;
 let budgetVersion;
 
 const request= indexedDB.open("BudgetDB", budgetVersion || 10)
 
+// event if database changes
 request.onupgradeneeded = (event) => {
     console.log("Need to upgrade IndexedDB")
     const {oldVersion} = event;
@@ -14,10 +15,11 @@ request.onupgradeneeded = (event) => {
 
 }
 
+// if unsuccesfull 
 request.onerror = function(event) {
     console.log("Shoot! " + event.target.errorCode);
   };
-
+// if successfull 
   request.onsuccess = ({ target }) => {
     db = target.result;
   
@@ -64,7 +66,7 @@ function checkDatabase() {
       }
     };
   }
-
+// offline record saving 
 const saveRecord = (record) => {
     console.log("Record has been saved!")
     const transaction = db.transaction(["budgetStore"], "readwrite");
